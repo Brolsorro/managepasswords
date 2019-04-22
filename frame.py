@@ -1,6 +1,5 @@
 #Python 3.7.1 32 bit и выше
 #Обратная совместимость есть
-
 from tkinter import messagebox
 import tkinter as tk
 from tkinter import *
