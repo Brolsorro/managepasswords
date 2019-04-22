@@ -15,7 +15,6 @@ up=up+"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*,/1234567890:
 left_side=list(left)
 up_side=list(up)
 
-
 sta_us=False
 current_file=""
 path_2="bin/pass"
