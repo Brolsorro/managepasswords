@@ -5,35 +5,60 @@ from PySide2 import QtCore, QtWidgets, QtGui
 
 from ui_mainwindow import Ui_MainWindow
 from time import sleep
+from backend import Backend
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Backend):
 
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # self.resize(321,180)
+
         # self.setWindowFlag(Qt.FramelessWindowHint)
-        self.ui.groupBox.setVisible(False)
+        self.ui.group_second.setVisible(False)
         self.ui.btn_send_answ.clicked.connect(self.send_answer_and_start_program)
         self.ui.btn_open_settings.clicked.connect(self.settings_open)
         self.ui.btn_clear_textboxs.clicked.connect(self.clear_text_boxes)
+        self.ui.textbox_answer.setText("Арангон")
+        self.ui.comboBox_check.setEditable(True)
 
         # Init params
         self.send_ans = False
         self.status_open_settings = False
+        self.choice_account = '<Выберите аккаунт>'
+
+        self.ui.textbox_question.setReadOnly(True)
+
+        # with open('bin/ini') as file:
+        #     self.ui.textbox_question.setText(file.read())
+
+        # Init from Backend
+        self.back_end = Backend(self)
+        self.ui.textbox_question.setText(self.back_end.text_question())
+
+    def init_combobox(self):
+        if self.choice_account not in self.ui.comboBox_check.currentText():
+            print(self.ui.comboBox_check.currentText())
+            self.ui.textbox_password.setEnabled(True)
+            self.ui.textbox_email.setEnabled(True)
+            self.ui.textbox_add_inf.setEnabled(True)
+            self.back_end.inizil_data()
 
     def send_answer_and_start_program(self):
-        self.ui.groupBox_2.setVisible(False)
-        self.ui.groupBox.setVisible(True)
-        self.ui.groupBox.geometry()
+        # self.message_box_warnning(title="Внимание!",question='Настоятельно рекомендуется поменять\nключ шифрования на cвой, особый!')
+        self.back_end.main_funn()
+
+        self.ui.group_first.setVisible(False)
+        self.ui.group_second.setVisible(True)
+        self.ui.group_second.geometry()
         # self.resize(343,319)
-        geom = self.ui.groupBox.geometry()
+        geom = self.ui.group_second.geometry()
         geom.setX(0)
         geom.setY(0)
-        self.ui.groupBox.setGeometry(geom)
+        self.ui.group_second.setGeometry(geom)
         self.send_ans = True
+        self.ui.comboBox_check.currentTextChanged.connect(self.init_combobox)
 
     def settings_open(self):
         if self.status_open_settings:
@@ -45,12 +70,11 @@ class MainWindow(QMainWindow):
             self.status_open_settings = True
             self.resize(321, 285)
 
-    @staticmethod
-    def message_box():
-        box = QtWidgets.QMessageBox()
+    def message_box_yes_no(self, title: str='Внимание!', question: str='Вы уверены, что хотите очистить\nтестовые поля?'):
+        box = QtWidgets.QMessageBox(self)
         box.setIcon(QtWidgets.QMessageBox.Information)
-        box.setWindowTitle('Внимание!')
-        box.setText('Вы уверены, что хотите очистить\nтестовые поля?')
+        box.setWindowTitle(title)
+        box.setText(question)
         box.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
         buttonY = box.button(QtWidgets.QMessageBox.Yes)
         buttonY.setText('Да')
@@ -62,8 +86,20 @@ class MainWindow(QMainWindow):
         elif box.clickedButton() == buttonN:
             return 0
 
+    def message_box_warnning(self, title: str, question: str):
+        box = QtWidgets.QMessageBox(self)
+        box.setIcon(QtWidgets.QMessageBox.Warning)
+        box.setWindowTitle(title)
+        box.setText(question)
+        box.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        buttonY = box.button(QtWidgets.QMessageBox.Ok)
+        buttonY.setText('Ок')
+        box.exec_()
+        if box.clickedButton() == buttonY:
+            return 1
+
     def clear_text_boxes(self):
-        result = self.message_box()
+        result = self.message_box_yes_no()
         if result == 1:
             self.ui.textbox_email.setText("")
             self.ui.textbox_password.setText("")
