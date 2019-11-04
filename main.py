@@ -20,7 +20,7 @@ class MainWindow(QMainWindow, Backend):
         self.ui.btn_send_answ.clicked.connect(self.send_answer_and_start_program)
         self.ui.btn_open_settings.clicked.connect(self.settings_open)
         self.ui.btn_clear_textboxs.clicked.connect(self.clear_text_boxes)
-        self.ui.textbox_answer.setText("Арангон")
+        self.ui.textbox_answer.setText("Ключ")
         self.ui.comboBox_check.setEditable(True)
 
         # Init params
@@ -30,12 +30,17 @@ class MainWindow(QMainWindow, Backend):
 
         self.ui.textbox_question.setReadOnly(True)
 
+
         # with open('bin/ini') as file:
         #     self.ui.textbox_question.setText(file.read())
 
         # Init from Backend
         self.back_end = Backend(self)
+
         self.ui.textbox_question.setText(self.back_end.text_question())
+        self.ui.btn_change_data.clicked.connect(self.back_end.change_data)
+        self.ui.btn_add_new_data.clicked.connect(self.back_end.add_data)
+        self.ui.btn_delete_data.clicked.connect(self.back_end.del_acc)
 
     def init_combobox(self):
         if self.choice_account not in self.ui.comboBox_check.currentText():
@@ -70,11 +75,11 @@ class MainWindow(QMainWindow, Backend):
             self.status_open_settings = True
             self.resize(321, 285)
 
-    def message_box_yes_no(self, title: str='Внимание!', question: str='Вы уверены, что хотите очистить\nтестовые поля?'):
+    def message_box_yes_no(self, title: str='Внимание!', message: str='Вы уверены, что хотите очистить\nтестовые поля?'):
         box = QtWidgets.QMessageBox(self)
         box.setIcon(QtWidgets.QMessageBox.Information)
         box.setWindowTitle(title)
-        box.setText(question)
+        box.setText(message)
         box.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
         buttonY = box.button(QtWidgets.QMessageBox.Yes)
         buttonY.setText('Да')
@@ -104,6 +109,7 @@ class MainWindow(QMainWindow, Backend):
             self.ui.textbox_email.setText("")
             self.ui.textbox_password.setText("")
             self.ui.textbox_add_inf.setText("")
+            self.ui.comboBox_check.setEditText(self.choice_account)
 
     def add_new_record(self):
         ...
