@@ -115,8 +115,7 @@ class Backend:
             self.name_keys.sort()
             self.st_input = True
         except BaseException as e:
-            # todo: Func
-            # messagebox.showerror(title="Ошибка", message="Неверный код доступа! \n Закрытие программы...")
+            self.functions.message_box_error(title="Ошибка", message="Неверный код доступа! \n Закрытие программы...")
             raise SystemExit
 
     # Обновляет список ключение в листе combobox
@@ -131,7 +130,6 @@ class Backend:
         self.ui_interface.textbox_add_inf.setEnabled(False)
         self.ui_interface.comboBox_check.clear()
         self.ui_interface.comboBox_check.addItems(self.name_keys)
-        self.ui_interface.comboBox_check.setEditText(self.choice_account)
 
     def encrypting(self):
         # шифрование
@@ -157,6 +155,7 @@ class Backend:
         self.current_file = self.decrypted_message
         self.start()
         self.combobox_update()
+        self.ui_interface.comboBox_check.setEditText(self.choice_account)
 
     def create_pattern_of_crypt(self):
         ## Создание таблицы-указателя шифрования
@@ -201,9 +200,9 @@ class Backend:
             self.current_file = str(self.file)
             self.combobox_update()
 
-            self.ui_interface.textbox_email.clear()
-            self.ui_interface.textbox_password.clear()
-            self.ui_interface.textbox_add_inf.clear()
+            # self.ui_interface.textbox_email.clear()
+            # self.ui_interface.textbox_password.clear()
+            # self.ui_interface.textbox_add_inf.clear()
 
     def add_data(self):
         answer = True
@@ -218,6 +217,7 @@ class Backend:
                                                                         self.ui_interface.textbox_add_inf.text()]
                 self.current_file = str(self.file)
                 self.combobox_update()
+                # self.ui_interface.comboBox_check.setEditText(self.choice_account)
 
     # Выход
     def exit_fun(self, raise_call=True):
@@ -277,6 +277,9 @@ class Backend:
                     self.ui_interface.textbox_email.clear()
                     self.ui_interface.textbox_password.clear()
                     self.ui_interface.textbox_add_inf.clear()
+                    self.ui_interface.textbox_email.setEnabled(False)
+                    self.ui_interface.textbox_password.setEnabled(False)
+                    self.ui_interface.textbox_add_inf.setEnabled(False)
 
     def ex_cop(self):
         warni = self.functions.message_box_yes_no(title="Внимание!", message="Вы уверены, что хотите экспортировать \nрасшифрованные данные в корень программы?")
@@ -295,7 +298,7 @@ class Backend:
             f.write(s)
             f.close()
 
-    def fun_03(self):
+    def change_message_fun(self):
         f = open(self.settings, "w", encoding="cp1251")
         f.write(self.ui_interface.textbox_change_message.text())
         f.close()
@@ -306,56 +309,9 @@ class Backend:
         self.decrypting()
 
         # деактивация всех кнопок вторичной формы
-        # if st_0 == True or mainanswer_Entry.get() == "Ключ":
-        #     st_0 = False
-        #     messagebox.showwarning(title="Внимание!", message="Настоятельно рекомендуется поменять\nключ шифрования на cвой, особый!")
-
-    def fff(self):
-        ...
-        # if mainanswer_Entry.get() == "":
-        #     main_recieve_button.config(state=DISABLED)
-        # if mainanswer_Entry.get() != "":
-        #     main_recieve_button.config(state=NORMAL)
-
-    def b1(self):
-        ...
-        # if box_change_key.get() == "":
-        #     button_change_key.config(state=DISABLED)
-        # if box_change_key.get() != "":
-        #     button_change_key.config(state=NORMAL)
-
-    def b2(self):
-        ...
-        # if box_quest_change.get() == "":
-        #     button_quest_change.config(state=DISABLED)
-        # if box_quest_change.get() != "":
-        #     button_quest_change.config(state=NORMAL)
-
-    def fun_001(self):
-        ...
-        # mainquestion_Entry.delete(0, END)
-        # mainquestion_Entry.insert(0, self.name_text)
-
-    def fun_002(self):
-
-        if self.hide == True:
-            hide = False
-            x_resolution = 280
-            y_resolution = 250
-            # root.geometry(str(x_resolution) + "x" + str(y_resolution))
-            # hider.place(width=20, height=20, x=237, y=228)
-            # hider.config(text="▲")
-            # box_change_key.place(width=205, height=23, x=32, y=150)
-            # button_change_key.place(width=205, height=23, x=32, y=175)
-            # box_quest_change.place(width=205, height=23, x=32, y=200)
-            # button_quest_change.place(width=205, height=23, x=32, y=225)
-        else:
-            hide = True
-            x_resolution = 280
-            y_resolution = 150
-            # root.geometry(str(x_resolution) + "x" + str(y_resolution))
-            # hider.place(width=20, height=20, x=237, y=126)
-            # hider.config(text="▼")
+        if self.st_0 == True or self.ui_interface.textbox_answer.text() == "Ключ":
+            self.st_0 = False
+            self.functions.message_box_warnning(title="Внимание!", message="Настоятельно рекомендуется поменять\nключ шифрования на cвой, особый!")
 
     def change_key(self):
         self.will_changed = True
