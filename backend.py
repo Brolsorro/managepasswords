@@ -33,6 +33,7 @@ class Backend:
         self.ui_interface = interface_gui.ui
         self.functions = interface_gui
         self.select = None
+        self.index_select = None
         self.st_bool = False
         self.choice_account = '<Выберите аккаунт>'
 
@@ -92,17 +93,19 @@ class Backend:
             ...
 
         self.st_bool = True
-        self.select = self.ui_interface.comboBox_check.currentText()
+        if self.ui_interface.comboBox_check.currentText() in self.name_keys:
+            self.select = self.ui_interface.comboBox_check.currentText()
         if self.select in self.name_keys:
-            s = self.file[self.select]
+            if len(self.name_keys)>1:
+                s = self.file[self.select]
+                self.ui_interface.textbox_email.setText(s[0])
+                self.ui_interface.textbox_password.setText(s[1])
+                self.ui_interface.textbox_add_inf.setText(s[2])
             # email_entry.delete(0, END)
-
             self.ui_interface.textbox_email.clear()
             self.ui_interface.textbox_password.clear()
             self.ui_interface.textbox_add_inf.clear()
-            self.ui_interface.textbox_email.setText(s[0])
-            self.ui_interface.textbox_password.setText(s[1])
-            self.ui_interface.textbox_add_inf.setText(s[2])
+
 
     def start(self):
         f = self.current_file
@@ -191,14 +194,17 @@ class Backend:
                 self.key = self.key[:-1 * (len(self.key) - len(file))]
 
     def change_data(self):
-        if self.ui_interface.comboBox_check.currentText() != "<Выберите аккаунт>":
-            self.file[self.ui_interface.comboBox_check.currentText()] = self.file.pop(self.select)
+        text = self.ui_interface.comboBox_check.currentText()
+        if text != "<Выберите аккаунт>":
+            self.file[text] = self.file.pop(self.select)
             self.select = self.ui_interface.comboBox_check.currentText()
             self.file[self.select][0] = self.ui_interface.textbox_email.text()
             self.file[self.select][1] = self.ui_interface.textbox_password.text()
             self.file[self.select][2] = self.ui_interface.textbox_add_inf.text()
             self.current_file = str(self.file)
             self.combobox_update()
+            self.ui_interface.comboBox_check.setCurrentIndex(self.ui_interface.comboBox_check.findText(text))
+
 
             # self.ui_interface.textbox_email.clear()
             # self.ui_interface.textbox_password.clear()
@@ -216,6 +222,7 @@ class Backend:
                                                                         self.ui_interface.textbox_password.text(),
                                                                         self.ui_interface.textbox_add_inf.text()]
                 self.current_file = str(self.file)
+                self.select = self.ui_interface.comboBox_check.currentText()
                 self.combobox_update()
                 # self.ui_interface.comboBox_check.setEditText(self.choice_account)
 
@@ -258,7 +265,7 @@ class Backend:
 
     # удаление выбранного аккаунта
     def del_acc(self):
-        current_text = self.ui_interface.comboBox_check.currentText()
+        current_text = self.select
         if current_text != "<Выберите аккаунт>" and current_text in self.name_keys:
 
             answer = 1
@@ -270,9 +277,7 @@ class Backend:
                     self.current_file = str(self.file)
                     index = self.ui_interface.comboBox_check.currentIndex()
                     self.ui_interface.comboBox_check.removeItem(index)
-                    self.select = ""
                     self.combobox_update()
-
                     self.ui_interface.comboBox_check.setEditText(self.choice_account)
                     self.ui_interface.textbox_email.clear()
                     self.ui_interface.textbox_password.clear()

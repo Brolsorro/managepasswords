@@ -102,6 +102,8 @@ class MainWindow(QMainWindow, Backend):
             self.ui.textbox_password.setEnabled(True)
             self.ui.textbox_email.setEnabled(True)
             self.ui.textbox_add_inf.setEnabled(True)
+            if self.ui.comboBox_check.currentText() in self.back_end.name_keys:
+                self.back_end.select = self.ui.comboBox_check.currentText()
             self.back_end.inizil_data()
 
     def send_answer_and_start_program(self):
@@ -188,6 +190,7 @@ class MainWindow(QMainWindow, Backend):
             self.ui.textbox_password.setText("")
             self.ui.textbox_add_inf.setText("")
             self.ui.comboBox_check.setEditText(self.choice_account)
+            self.back_end.select=self.choice_account
 
     def closeEvent(self, event: QtGui.QCloseEvent):
         self.back_end.exit_fun(False)
