@@ -15,13 +15,14 @@ class MainWindow(QMainWindow, Backend):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        self.setFixedSize(321, 183)
         # self.setWindowFlag(Qt.FramelessWindowHint)
+        # self.setWindowFlag(self, Qt.MSWindowsFixedSizeDialogHint)
         self.ui.group_second.setVisible(False)
         self.ui.btn_send_answ.clicked.connect(self.send_answer_and_start_program)
         self.ui.btn_open_settings.clicked.connect(self.settings_open)
         self.ui.btn_clear_textboxs.clicked.connect(self.clear_text_boxes)
-        self.ui.textbox_answer.setText("Ключ")
+        # self.ui.textbox_answer.setText("Ключ")
         self.ui.comboBox_check.setEditable(True)
 
         # Init params
@@ -125,11 +126,11 @@ class MainWindow(QMainWindow, Backend):
         if self.status_open_settings:
             self.ui.btn_open_settings.setText(QtWidgets.QApplication.translate("MainWindow", "▼", None, -1))
             self.status_open_settings = False
-            self.resize(321, 180)
+            self.setFixedSize(321, 180)
         else:
             self.ui.btn_open_settings.setText(QtWidgets.QApplication.translate("MainWindow", "▲", None, -1))
             self.status_open_settings = True
-            self.resize(321, 285)
+            self.setFixedSize(321, 285)
 
     def message_box_yes_no(self, title: str='Внимание!', message: str='Вы уверены, что хотите очистить\nтестовые поля?'):
         box = QtWidgets.QMessageBox(self)
