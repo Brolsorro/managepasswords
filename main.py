@@ -17,13 +17,24 @@ class MainWindow(QMainWindow, Backend):
         self.ui.setupUi(self)
         self.setFixedSize(321, 183)
         # self.setWindowFlag(Qt.FramelessWindowHint)
-        # self.setWindowFlag(self, Qt.MSWindowsFixedSizeDialogHint)
+
         self.ui.group_second.setVisible(False)
         self.ui.btn_send_answ.clicked.connect(self.send_answer_and_start_program)
         self.ui.btn_open_settings.clicked.connect(self.settings_open)
         self.ui.btn_clear_textboxs.clicked.connect(self.clear_text_boxes)
         # self.ui.textbox_answer.setText("Ключ")
+        self.ui.btn_buffer_email.setIcon(QtGui.QIcon('image/file.png'))
+        self.ui.btn_buffer_pass.setIcon(QtGui.QIcon('image/file.png'))
+        self.ui.btn_buff_add_inf.setIcon(QtGui.QIcon('image/file.png'))
+
         self.ui.comboBox_check.setEditable(True)
+        app_icon = QtGui.QIcon()
+        # app_icon.addFile('gui/icons/48x48.png', QtCore.QSize(48, 48))
+        try:
+            app_icon.addFile('image/ico.ico')
+            app.setWindowIcon(app_icon)
+        except Exception as e:
+            print(e.args[0])
 
         # Init params
         self.send_ans = False
@@ -105,7 +116,7 @@ class MainWindow(QMainWindow, Backend):
             self.ui.textbox_add_inf.setEnabled(True)
             if self.ui.comboBox_check.currentText() in self.back_end.name_keys:
                 self.back_end.select = self.ui.comboBox_check.currentText()
-            self.back_end.inizil_data()
+            self.back_end.event_choice_data_in_combobox()
 
     def send_answer_and_start_program(self):
         # self.message_box_warnning(title="Внимание!",question='Настоятельно рекомендуется поменять\nключ шифрования на cвой, особый!')
@@ -190,6 +201,9 @@ class MainWindow(QMainWindow, Backend):
             self.ui.textbox_email.setText("")
             self.ui.textbox_password.setText("")
             self.ui.textbox_add_inf.setText("")
+            self.ui.textbox_email.setEnabled(False)
+            self.ui.textbox_password.setEnabled(False)
+            self.ui.textbox_add_inf.setEnabled(False)
             self.ui.comboBox_check.setEditText(self.choice_account)
             self.back_end.select=self.choice_account
 

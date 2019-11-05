@@ -37,15 +37,14 @@ class Backend:
         self.st_bool = False
         self.choice_account = '<Выберите аккаунт>'
 
-
-        if os.path.exists(self.settings) == False:
+        if not os.path.exists(self.settings):
             st_0 = True
             os.mkdir("bin")
             f = open(self.settings, "w", encoding="cp1251")
             f.write("По умолчанию ключ: Ключ")
             f.close()
 
-        if (os.path.exists(self.path_2) == False):
+        if os.path.exists(self.path_2) == False:
 
             f = open(self.settings, "w", encoding="cp1251")
             self.ss1 = "По умолчанию ключ: Ключ"
@@ -59,7 +58,7 @@ class Backend:
 
             self.current_file = "{'<Пример>': ['<email>', '<pass>', '<info>'], '<Пример_2>': ['<email>', '<pass>', '<info>']," + " '<Пример_3>': ['<email>', '<pass>', '<info>']}"
             self.file = self.current_file
-            while (len(self.key) < len(self.file)):
+            while len(self.key) < len(self.file):
                 self.key = self.key * 2
             if len(self.key) != len(self.file):
                 self.key = self.key[:-1 * (len(self.key) - len(self.file))]
@@ -76,17 +75,17 @@ class Backend:
             with open(self.settings, 'r', encoding="cp1251") as f:
                 self.fuf = f.read()
             self.name_text = self.fuf
-        except BaseException:
-            None
+        except BaseException as e:
+            print(e.args[0])
 
-        if self.sta_us == True:
+        if self.sta_us:
             self.create_pattern_of_crypt()
             self.encrypting()
 
     def text_question(self):
         return self.name_text
 
-    def inizil_data(self):
+    def event_choice_data_in_combobox(self):
         if not self.st_bool:
             # button_addit = Button(text="Добавить", command=add_data)
             # button_addit.place(width=100, height=23, x=153 - x2, y=mas2[4])
@@ -96,7 +95,7 @@ class Backend:
         if self.ui_interface.comboBox_check.currentText() in self.name_keys:
             self.select = self.ui_interface.comboBox_check.currentText()
         if self.select in self.name_keys:
-            if len(self.name_keys)>1:
+            if len(self.name_keys) > 1:
                 s = self.file[self.select]
                 self.ui_interface.textbox_email.setText(s[0])
                 self.ui_interface.textbox_password.setText(s[1])
@@ -105,7 +104,6 @@ class Backend:
             # self.ui_interface.textbox_email.clear()
             # self.ui_interface.textbox_password.clear()
             # self.ui_interface.textbox_add_inf.clear()
-
 
     def start(self):
         f = self.current_file
@@ -205,7 +203,6 @@ class Backend:
             self.combobox_update()
             self.ui_interface.comboBox_check.setCurrentIndex(self.ui_interface.comboBox_check.findText(text))
 
-
             # self.ui_interface.textbox_email.clear()
             # self.ui_interface.textbox_password.clear()
             # self.ui_interface.textbox_add_inf.clear()
@@ -215,12 +212,12 @@ class Backend:
         if self.ui_interface.comboBox_check.currentText() != "<Выберите аккаунт>":
             if self.ui_interface.comboBox_check.currentText() in self.name_keys:
                 answer = self.functions.message_box_yes_no(title="Внимание...", message="Такая запись в базе уже есть.\n" +
-                                                                          "Вы хотите обновить информацию о записи? \n" + "<" + self.ui_interface.comboBox_check.currentText() + ">")
+                                                                                        "Вы хотите обновить информацию о записи? \n" + "<" + self.ui_interface.comboBox_check.currentText() + ">")
             text = self.ui_interface.comboBox_check.currentText()
             if answer == 1:
                 self.file[text] = [self.ui_interface.textbox_email.text(),
-                                                                        self.ui_interface.textbox_password.text(),
-                                                                        self.ui_interface.textbox_add_inf.text()]
+                                   self.ui_interface.textbox_password.text(),
+                                   self.ui_interface.textbox_add_inf.text()]
                 self.current_file = str(self.file)
                 self.select = self.ui_interface.comboBox_check.currentText()
                 self.combobox_update()
@@ -270,7 +267,7 @@ class Backend:
 
             answer = 1
             answer = self.functions.message_box_yes_no(title="Внимание...", message="Вы уверены что хотите удалить запись:\n" +
-                                                                   "<" + current_text + ">")
+                                                                                    "<" + current_text + ">")
             if answer == 1:
                 if self.select in self.name_keys:
                     del self.file[self.select]
@@ -329,7 +326,7 @@ class Backend:
 
         file = self.current_file
         while len(self.key) < len(file):
-           self.key = self.key * 2
+            self.key = self.key * 2
         if len(self.key) != len(file):
             self.key = self.key[:-1 * (len(self.key) - len(file))]
 
