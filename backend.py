@@ -102,9 +102,9 @@ class Backend:
                 self.ui_interface.textbox_password.setText(s[1])
                 self.ui_interface.textbox_add_inf.setText(s[2])
             # email_entry.delete(0, END)
-            self.ui_interface.textbox_email.clear()
-            self.ui_interface.textbox_password.clear()
-            self.ui_interface.textbox_add_inf.clear()
+            # self.ui_interface.textbox_email.clear()
+            # self.ui_interface.textbox_password.clear()
+            # self.ui_interface.textbox_add_inf.clear()
 
 
     def start(self):
@@ -198,9 +198,9 @@ class Backend:
         if text != "<Выберите аккаунт>":
             self.file[text] = self.file.pop(self.select)
             self.select = self.ui_interface.comboBox_check.currentText()
-            self.file[self.select][0] = self.ui_interface.textbox_email.text()
-            self.file[self.select][1] = self.ui_interface.textbox_password.text()
-            self.file[self.select][2] = self.ui_interface.textbox_add_inf.text()
+            self.file[text][0] = self.ui_interface.textbox_email.text()
+            self.file[text][1] = self.ui_interface.textbox_password.text()
+            self.file[text][2] = self.ui_interface.textbox_add_inf.text()
             self.current_file = str(self.file)
             self.combobox_update()
             self.ui_interface.comboBox_check.setCurrentIndex(self.ui_interface.comboBox_check.findText(text))
@@ -216,15 +216,15 @@ class Backend:
             if self.ui_interface.comboBox_check.currentText() in self.name_keys:
                 answer = self.functions.message_box_yes_no(title="Внимание...", message="Такая запись в базе уже есть.\n" +
                                                                           "Вы хотите обновить информацию о записи? \n" + "<" + self.ui_interface.comboBox_check.currentText() + ">")
-
+            text = self.ui_interface.comboBox_check.currentText()
             if answer == 1:
-                self.file[self.ui_interface.comboBox_check.currentText()] = [self.ui_interface.textbox_email.text(),
+                self.file[text] = [self.ui_interface.textbox_email.text(),
                                                                         self.ui_interface.textbox_password.text(),
                                                                         self.ui_interface.textbox_add_inf.text()]
                 self.current_file = str(self.file)
                 self.select = self.ui_interface.comboBox_check.currentText()
                 self.combobox_update()
-                # self.ui_interface.comboBox_check.setEditText(self.choice_account)
+                self.ui_interface.comboBox_check.setCurrentIndex(self.ui_interface.comboBox_check.findText(text))
 
     # Выход
     def exit_fun(self, raise_call=True):
