@@ -527,7 +527,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
+        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "Реестр V", None, -1))
         self.btn_open_settings.setText(QtWidgets.QApplication.translate("MainWindow", "▼", None, -1))
         self.btn_clear_textboxs.setText(QtWidgets.QApplication.translate("MainWindow", "Очистить поля", None, -1))
         self.label_5.setText(QtWidgets.QApplication.translate("MainWindow", "Доп. инфор:", None, -1))
