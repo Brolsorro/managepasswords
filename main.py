@@ -194,7 +194,8 @@ class MainWindow(QMainWindow, Backend):
             self.back_end.select=self.choice_account
 
     def closeEvent(self, event: QtGui.QCloseEvent):
-        self.back_end.exit_fun(False)
+        if not self.ui.group_first.isVisible():
+            self.back_end.exit_fun(False)
 
 
 if __name__ == "__main__":

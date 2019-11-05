@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'untitled.ui',
 # licensing of 'untitled.ui' applies.
 #
-# Created: Mon Nov  4 01:25:48 2019
+# Created: Tue Nov  5 17:07:54 2019
 #      by: pyside2-uic  running on PySide2 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -434,7 +434,7 @@ class Ui_MainWindow(object):
         self.btn_clear_textboxs.setGeometry(QtCore.QRect(167, 150, 111, 23))
         self.btn_clear_textboxs.setObjectName("btn_clear_textboxs")
         self.label_5 = QtWidgets.QLabel(self.group_second)
-        self.label_5.setGeometry(QtCore.QRect(24, 93, 81, 16))
+        self.label_5.setGeometry(QtCore.QRect(10, 93, 91, 16))
         self.label_5.setObjectName("label_5")
         self.textbox_password = QtWidgets.QLineEdit(self.group_second)
         self.textbox_password.setGeometry(QtCore.QRect(104, 68, 171, 20))
@@ -449,7 +449,7 @@ class Ui_MainWindow(object):
         self.textbox_add_inf.setGeometry(QtCore.QRect(104, 93, 171, 20))
         self.textbox_add_inf.setObjectName("textbox_add_inf")
         self.label_6 = QtWidgets.QLabel(self.group_second)
-        self.label_6.setGeometry(QtCore.QRect(24, 43, 81, 16))
+        self.label_6.setGeometry(QtCore.QRect(10, 43, 91, 16))
         self.label_6.setObjectName("label_6")
         self.btn_buffer_pass = QtWidgets.QPushButton(self.group_second)
         self.btn_buffer_pass.setGeometry(QtCore.QRect(279, 66, 21, 23))
@@ -470,7 +470,7 @@ class Ui_MainWindow(object):
         self.btn_buff_add_inf.setGeometry(QtCore.QRect(279, 91, 21, 23))
         self.btn_buff_add_inf.setObjectName("btn_buff_add_inf")
         self.label_2 = QtWidgets.QLabel(self.group_second)
-        self.label_2.setGeometry(QtCore.QRect(24, 18, 81, 16))
+        self.label_2.setGeometry(QtCore.QRect(10, 18, 91, 16))
         self.label_2.setObjectName("label_2")
         self.btn_delete_data = QtWidgets.QPushButton(self.group_second)
         self.btn_delete_data.setGeometry(QtCore.QRect(41, 150, 111, 23))
@@ -485,7 +485,7 @@ class Ui_MainWindow(object):
         self.btn_export_data.setGeometry(QtCore.QRect(19, 128, 21, 41))
         self.btn_export_data.setObjectName("btn_export_data")
         self.label_4 = QtWidgets.QLabel(self.group_second)
-        self.label_4.setGeometry(QtCore.QRect(24, 70, 81, 16))
+        self.label_4.setGeometry(QtCore.QRect(10, 70, 91, 16))
         self.label_4.setObjectName("label_4")
         self.btn_change_message = QtWidgets.QPushButton(self.group_second)
         self.btn_change_message.setGeometry(QtCore.QRect(74, 256, 171, 23))
@@ -516,7 +516,7 @@ class Ui_MainWindow(object):
         self.textbox_answer.setGeometry(QtCore.QRect(10, 70, 271, 21))
         self.textbox_answer.setObjectName("textbox_answer")
         self.label = QtWidgets.QLabel(self.group_first)
-        self.label.setGeometry(QtCore.QRect(80, 20, 131, 16))
+        self.label.setGeometry(QtCore.QRect(80, 20, 171, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
