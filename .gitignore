@@ -1,6 +1,8 @@
 bin
 bin/ini
 bin/pass
+venv
+.venv
 bin(резерв)/ini
 bin(резерв)/pass
 bin(резерв)

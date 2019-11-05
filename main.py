@@ -6,6 +6,7 @@ from PySide2 import QtCore, QtWidgets, QtGui
 from ui_mainwindow import Ui_MainWindow
 from time import sleep
 from backend import Backend
+import inspect
 
 
 class MainWindow(QMainWindow, Backend):
@@ -30,10 +31,6 @@ class MainWindow(QMainWindow, Backend):
 
         self.ui.textbox_question.setReadOnly(True)
 
-
-        # with open('bin/ini') as file:
-        #     self.ui.textbox_question.setText(file.read())
-
         # Init from Backend
         self.back_end = Backend(self)
 
@@ -41,10 +38,13 @@ class MainWindow(QMainWindow, Backend):
         self.ui.btn_change_data.clicked.connect(self.back_end.change_data)
         self.ui.btn_add_new_data.clicked.connect(self.back_end.add_data)
         self.ui.btn_delete_data.clicked.connect(self.back_end.del_acc)
+        self.ui.btn_change_key.clicked.connect(self.back_end.change_key)
+        self.ui.btn_change_message.clicked.connect(self.back_end.fun_03)
+        self.ui.btn_export_data.clicked.connect(self.back_end.ex_cop)
+        self.ui.btn_exit.clicked.connect(self.back_end.exit_fun)
 
     def init_combobox(self):
         if self.choice_account not in self.ui.comboBox_check.currentText():
-            print(self.ui.comboBox_check.currentText())
             self.ui.textbox_password.setEnabled(True)
             self.ui.textbox_email.setEnabled(True)
             self.ui.textbox_add_inf.setEnabled(True)
@@ -91,11 +91,35 @@ class MainWindow(QMainWindow, Backend):
         elif box.clickedButton() == buttonN:
             return 0
 
-    def message_box_warnning(self, title: str, question: str):
+    def message_box_error(self, title: str, message: str):
+        box = QtWidgets.QMessageBox(self)
+        box.setIcon(QtWidgets.QMessageBox.Critical)
+        box.setWindowTitle(title)
+        box.setText(message)
+        box.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        buttonY = box.button(QtWidgets.QMessageBox.Ok)
+        buttonY.setText('Ок')
+        box.exec_()
+        if box.clickedButton() == buttonY:
+            return 1
+
+    def message_box_warnning(self, title: str, message: str):
         box = QtWidgets.QMessageBox(self)
         box.setIcon(QtWidgets.QMessageBox.Warning)
         box.setWindowTitle(title)
-        box.setText(question)
+        box.setText(message)
+        box.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        buttonY = box.button(QtWidgets.QMessageBox.Ok)
+        buttonY.setText('Ок')
+        box.exec_()
+        if box.clickedButton() == buttonY:
+            return 1
+
+    def message_box_information(self, title: str, message: str):
+        box = QtWidgets.QMessageBox(self)
+        box.setIcon(QtWidgets.QMessageBox.Information)
+        box.setWindowTitle(title)
+        box.setText(message)
         box.setStandardButtons(QtWidgets.QMessageBox.Ok)
         buttonY = box.button(QtWidgets.QMessageBox.Ok)
         buttonY.setText('Ок')
@@ -111,11 +135,9 @@ class MainWindow(QMainWindow, Backend):
             self.ui.textbox_add_inf.setText("")
             self.ui.comboBox_check.setEditText(self.choice_account)
 
-    def add_new_record(self):
-        ...
+    def closeEvent(self, event: QtGui.QCloseEvent):
+        self.back_end.exit_fun(False)
 
-    def delete_exist_record(self):
-        ...
 
 
 if __name__ == "__main__":

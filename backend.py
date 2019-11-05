@@ -1,7 +1,3 @@
-from tkinter import messagebox
-import tkinter as tk
-from tkinter import *
-from tkinter.ttk import *
 from os import remove as deleting_file
 import os.path
 
@@ -108,7 +104,6 @@ class Backend:
             self.ui_interface.textbox_password.setText(s[1])
             self.ui_interface.textbox_add_inf.setText(s[2])
 
-
     def start(self):
         f = self.current_file
         self.file_buf = f  # Запись данных в переменную file_bufы
@@ -120,7 +115,8 @@ class Backend:
             self.name_keys.sort()
             self.st_input = True
         except BaseException as e:
-            messagebox.showerror(title="Ошибка", message="Неверный код доступа! \n Закрытие программы...")
+            # todo: Func
+            # messagebox.showerror(title="Ошибка", message="Неверный код доступа! \n Закрытие программы...")
             raise SystemExit
 
     # Обновляет список ключение в листе combobox
@@ -190,14 +186,13 @@ class Backend:
                 self.key = self.key
                 # смена ключа
                 # key="Ключ"
-            while len(self.key) < len(self.file):
+            while len(self.key) < len(file):
                 self.key = self.key * 2
             if len(self.key) != len(file):
                 self.key = self.key[:-1 * (len(self.key) - len(file))]
 
     def change_data(self):
         if self.ui_interface.comboBox_check.currentText() != "<Выберите аккаунт>":
-
             self.file[self.ui_interface.comboBox_check.currentText()] = self.file.pop(self.select)
             self.select = self.ui_interface.comboBox_check.currentText()
             self.file[self.select][0] = self.ui_interface.textbox_email.text()
@@ -225,10 +220,13 @@ class Backend:
                 self.combobox_update()
 
     # Выход
-    def exit_fun(self):
+    def exit_fun(self, raise_call=True):
+        raise_call = not raise_call
         self.create_pattern_of_crypt()
         self.encrypting()
-        raise SystemExit
+        print(raise_call)
+        if raise_call:
+            raise SystemExit(0)
 
     def f_1(self):
         self.add = 1
@@ -281,9 +279,8 @@ class Backend:
                     self.ui_interface.textbox_add_inf.clear()
 
     def ex_cop(self):
-        warni = False
-        warni = messagebox.askyesno(title="Внимание!", message="Вы уверены, что хотите экспортировать \nрасшифрованные данные в корень программы?")
-        if warni == True:
+        warni = self.functions.message_box_yes_no(title="Внимание!", message="Вы уверены, что хотите экспортировать \nрасшифрованные данные в корень программы?")
+        if warni == 1:
             ff = self.current_file
             s = ""
             file = {}  # объявление типа словарь
@@ -302,7 +299,7 @@ class Backend:
         f = open(self.settings, "w", encoding="cp1251")
         f.write(self.ui_interface.textbox_change_message.text())
         f.close()
-        messagebox.showinfo(title="Уведомление", message="Был изменен текст подсказки!")
+        self.functions.message_box_information(title="Уведомление", message="Был изменен текст подсказки!")
 
     def main_funn(self):
         self.create_pattern_of_crypt()
@@ -373,7 +370,7 @@ class Backend:
         while len(self.key) < len(file):
            self.key = self.key * 2
         if len(self.key) != len(file):
-            self.key = self.key[:-1 * (len(self.key) - len(self.file))]
+            self.key = self.key[:-1 * (len(self.key) - len(file))]
 
         encrypted_message = ""
         for i in range(len(file)):
@@ -392,4 +389,4 @@ class Backend:
         self.key = buf_kk
         self.current_file = decrypted_message
         self.combobox_update()
-        messagebox.showinfo(title="Уведомление", message="Был изменен ключ шифрования!")
+        self.functions.message_box_information(title="Уведомление", message="Был изменен ключ шифрования!")
