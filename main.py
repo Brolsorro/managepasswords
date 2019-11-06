@@ -65,12 +65,12 @@ class MainWindow(QMainWindow, Backend):
         self.loop_check_edited_textbox_change_key()
 
     @staticmethod
-    def move2RightBottomCorner(win):
+    def move_to_center(win):
         screen_geometry = QApplication.desktop().availableGeometry()
         screen_size = (screen_geometry.width(), screen_geometry.height())
         win_size = (win.frameSize().width(), win.frameSize().height())
-        x = screen_size[0]/2
-        y = screen_size[1]/2
+        x = int(screen_size[0] / 2 - win_size[0] / 2)
+        y = int(screen_size[1] / 2 - win_size[1] / 2)
         win.move(x, y)
 
     def loop_check_edited_textbox_answer(self):
@@ -217,7 +217,7 @@ if __name__ == "__main__":
 
     window = MainWindow()
     # window.move(window.width()*-3,0)
-    window.move(0,0)
+    window.move(0, 0)
     window.show()
-    window.move2RightBottomCorner(window)
+    window.move_to_center(window)
     sys.exit(app.exec_())

@@ -8,3 +8,5 @@ bin(резерв)/pass
 bin(резерв)
 .idea
 Реестр.lnk
+.gitignore
+DEBUG
