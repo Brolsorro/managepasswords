@@ -4,5 +4,7 @@
 
 * Приложение переписано с Tkinter в PySide2
 
-**Date first release: 20/12/2018**
+>Date last release: 10/2019**
+
+>Date first release: 20/12/2018**
 
